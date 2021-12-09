@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="TransitionEditor.uss" />
+    <ui:VisualElement name="Header">
+        <ui:VisualElement name="Icon" />
+        <ui:TextField picking-mode="Ignore" value="Name" text="Name" name="NameField" />
+    </ui:VisualElement>
+    <ui:VisualElement name="InspectorContainer" style="flex-grow: 1; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;">
+        <ui:Toggle label="Has Input Window" name="HasInputWindow" binding-path="hasInputWindow" />
+        <uie:FloatField label="Input Window Start" value="42.2" name="InputStart" binding-path="inputWindowStart" />
+        <uie:FloatField label="Input Window End" value="42.2" name="InputEnd" binding-path="inputWindowEnd" />
+        <ui:Toggle label="Has Exit Time" name="HasExitTime" binding-path="transitionParameters.hasExitTime" />
+        <uie:FloatField label="Exit Time" value="42.2" name="ExitTime" binding-path="transitionParameters.exitTime" />
+        <uie:FloatField label="Transition Time" value="42.2" name="TransitionTime" binding-path="transitionParameters.transitionTime" />
+        <uie:FloatField label="Transition Offset" value="42.2" name="TransitionOffset" binding-path="transitionParameters.transitionOffset" />
+    </ui:VisualElement>
+</ui:UXML>

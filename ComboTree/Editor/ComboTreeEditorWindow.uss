@@ -1,0 +1,30 @@
+TreeView > GridBackground {
+    --grid-background-color: rgb(40, 40, 40);
+    --line-color: rgba(193, 196, 192, 0.1);
+    --thick-line-color: rgba(193, 196, 192, 0.1);
+    --spacing: 15;
+}
+
+.Entry #title-label {
+    color: rgb(0, 0, 0);
+}
+
+.Any #title-label {
+    color: rgb(0, 0, 0);
+}
+
+.Exit #title-label {
+    color: rgb(0, 0, 0);
+}
+
+.Entry #title {
+    background-color: rgb(131, 255, 0);
+}
+
+.Any #title {
+    background-color: rgb(0, 98, 255);
+}
+
+.Exit #title {
+    background-color: rgb(255, 0, 72);
+}

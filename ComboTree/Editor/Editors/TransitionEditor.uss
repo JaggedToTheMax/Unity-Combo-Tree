@@ -1,0 +1,67 @@
+#Header {
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    visibility: visible;
+    overflow: visible;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(26, 26, 26);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#Icon {
+    height: 40px;
+    width: 40px;
+    max-width: 40px;
+    min-width: 40px;
+    max-height: 40px;
+    min-height: 40px;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/Packages/com.unity.inputsystem/InputSystem/Editor/Icons/ChevronDown@2x.png');
+}
+
+#NameField {
+    flex-grow: 1;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    height: 20px;
+}
+
+#Inspector {
+    flex-grow: 1;
+}
+
+#ContextMenuButton {
+    height: 20px;
+    width: 20px;
+    background-color: rgba(88, 88, 88, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-image: resource('Icons/settings_button');
+}
+
+#ContextMenuButton:hover {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(88, 88, 88);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-image: resource('Icons/settings_button');
+}

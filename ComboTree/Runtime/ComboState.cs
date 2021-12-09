@@ -1,0 +1,28 @@
+using PlayableAnimation;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace ComboTree
+{
+    public class ComboState : State
+    {
+        public Dictionary<int, ComboTransition> transitions = new Dictionary<int, ComboTransition>();
+        public int nameHash;
+
+        public ComboState(AnimationClip animationClip, string name) : base(animationClip)
+        {
+            this.animationClip = animationClip;
+            nameHash = Animator.StringToHash(name);
+        }
+        public ComboState(AnimationClip animationClip) : base(animationClip)
+        {
+            this.animationClip = animationClip;
+            nameHash = Animator.StringToHash(animationClip is null ? "" : animationClip.name);
+        }
+
+        public bool IsName(string name)
+        {
+            return Animator.StringToHash(name) == nameHash;
+        }
+    }
+}

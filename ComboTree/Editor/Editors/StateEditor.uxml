@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="HeaderContainer" style="height: 50px; flex-direction: row; justify-content: flex-start; border-bottom-width: 1px; border-bottom-color: rgb(12, 12, 12); background-color: rgb(60, 60, 60); padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px;">
+        <ui:VisualElement name="IconSpace" style="flex-grow: 1; width: 50px; max-width: 45px; padding-left: 0; padding-right: 5px; padding-top: 0; padding-bottom: 0;">
+            <ui:VisualElement name="Icon" style="flex-grow: 0; width: 40px; height: 40px;" />
+        </ui:VisualElement>
+        <ui:TextField picking-mode="Ignore" value="Name" text="Name" name="NameField" binding-path="m_Name" style="flex-grow: 1; max-height: 20px; padding-top: 0;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="InspectorContainer" style="padding-left: 15px; padding-right: 2px; padding-top: 0; padding-bottom: 0; flex-grow: 1;">
+        <uie:PropertyField name="AnimationClipField" binding-path="animationClip" style="min-height: 20px;" />
+        <uie:PropertyField name="ReturnToDefaultField" binding-path="returnToDefault" style="min-height: 20px;" />
+    </ui:VisualElement>
+</ui:UXML>
