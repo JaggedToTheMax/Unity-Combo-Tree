@@ -34,4 +34,7 @@ and defines a bool "returnToDefault", which when true causes the state to automa
 (this can canceled by simply transitioning to another state).
 
 To inspect an Animation State simply leftclick on it and it will show up in Unitys default inspector.
+
+## Transitions
+
  
