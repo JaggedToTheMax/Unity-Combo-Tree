@@ -1,2 +1,13 @@
 # ComboTree
- An alternative to Unity's Mecanim made for a combo focused combatsystem. It was made using the graphView and playables api which allows you to alter the animationcontroller at runtime.
+ An alternative to Unitys Mecanim for a combo focused combatsystem made using the GraphView and Playables APIs.
+# Features
+### Mecanim Compatible
+ComboTree is not meant to replace but rather extend Mecanim, for parts of your statemachine that you need more controll over. 
+This allows you keep your more complex state logic whilst still having the option to flexibly transition.
+### Runtime Editing
+Because ComboTree was made using the Playables API you can easily alter the graph by:
+- transitioning to a new animationclip
+- transitioning to a new state
+- changing the graph completely
+### Eventbased Transition
+Unlike Mecanim, the Combo Animator will only transition when Transition() is called (unless the state is marked as returnToDefault).
