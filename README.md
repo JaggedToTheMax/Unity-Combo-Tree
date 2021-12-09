@@ -10,4 +10,7 @@ Because ComboTree was made using the Playables API you can easily alter the grap
 - transitioning to a new state
 - changing the graph completely
 ### Eventbased Transition
-Unlike Mecanim, the Combo Animator will only transition when Transition() is called (unless the state is marked as returnToDefault).
+Unlike Mecanim, the Combo Tree transitions are are eventbased and will execute once an external source triggers them.
+#Hi
+##s
+###ss
