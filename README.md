@@ -1,2 +1,2 @@
 # ComboTree
- An alternative to Unitys mecanim made specificly for combo based combat systems.
+ An alternative to Unity's Mecanim made for a combo focused combatsystem.
