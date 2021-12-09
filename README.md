@@ -24,11 +24,13 @@ The Any State has the same function as its Mecanim equivalent, in that any of it
 ### Exit State
 The Exit State, like the Entry State, represents the default state in your Combo Tree.
 Unlike the Entry State, you are able to create and destroy Exit States (to avoid transition hell), which all point to the same default state.
+
 To create a new Exit State simply rightclick on an empty spot in the editor and choose "New Exit".
 ### Animation State
 The Animation State can, like the Exit State, be created and destroyed and make up the core of a Combo Tree. 
 Every Animation State holds a reference to an animationclip which will be played upon entering the state,
 and defines a bool "returnToDefault", which when true causes the state to automaticly transition back to the default state 
 (this can canceled by simply transitioning to another state).
+
 To inspect an Animation State simply leftclick on it and it will show up in Unitys default inspector.
  
