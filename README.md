@@ -30,6 +30,7 @@ The Animation State can, like the Exit State, be created and destroyed and make 
 Every Animation State holds a reference to an animationclip which will be played upon entering the state,
 and defines a bool "returnToDefault", which when true causes the state to automaticly transition back to the default state 
 (this can canceled by simply transitioning to another state).
+
 To create a new Animation State simply rightclick on an empty spot in the editor and choose "New State".
  To inspect an Animation State simply leftclick on it and it will show up in Unitys default inspector.
  
