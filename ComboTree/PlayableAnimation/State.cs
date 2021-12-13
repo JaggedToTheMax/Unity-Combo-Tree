@@ -8,11 +8,14 @@ namespace PlayableAnimation
     public class State
     {
         public AnimationClip animationClip;
-        public bool returnToDefault;
 
         public State(AnimationClip animationClip)
         {
             this.animationClip = animationClip;
         }
+
+        public virtual void OnEnter(PlayableAnimator animator) { }
+        public virtual void OnUpdate(PlayableAnimator animator) { }
+        public virtual void OnExit(PlayableAnimator animator) { }
     }
 }

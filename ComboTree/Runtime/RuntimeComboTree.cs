@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using PlayableAnimation;
 
 namespace ComboTree
@@ -13,7 +14,7 @@ namespace ComboTree
 
         public RuntimeComboTree (ComboTreeController comboTree)
         {
-            var dict = new Dictionary<serializedState, ComboState>();
+            var dict = new Dictionary<SerializedState, ComboState>();
             this.comboTree = comboTree;
 
             foreach (var state in comboTree.States)
@@ -23,24 +24,25 @@ namespace ComboTree
 
                 switch (state.name)
                 {
-                    case serializedState.EntryName:
+                    case SerializedState.EntryName:
                         dict.Add(state, entry);
                         break;
-                    case serializedState.AnyName:
+                    case SerializedState.AnyName:
                         dict.Add(state, any);
                         break;
-                    case serializedState.ExitName:
+                    case SerializedState.ExitName:
                         break;
                     default:
-                        dict.Add(state, new ComboState(state.animationClip, state.name) { returnToDefault = state.returnToDefault });
+                        dict.Add(state, new ComboState(state.animationClip, state.name));
                         break;
                 }
             }
 
             foreach (var state in comboTree.States)
             {
-                if (state.transitions is null || !dict.ContainsKey(state))
+                if (state.transitions is null || !dict.TryGetValue(state, out var runtimeState))
                     continue;
+
                 foreach (var transition in state.transitions)
                 {
                     var newTransition = new ComboTransition(transition.transitionParameters, transition.Name)
@@ -48,10 +50,11 @@ namespace ComboTree
                         target = transition.Target.IsExit ? entry : dict[transition.Target],
                         inputWindowStart = transition.inputWindowStart,
                         inputWindowEnd = transition.inputWindowEnd,
-                        hasInputWindow = transition.hasInputWindow
+                        hasInputWindow = transition.hasInputWindow,
+                        canInterrupt = transition.canInterrupt,
                     };
 
-                    dict[state].transitions.Add(newTransition.nameHash, newTransition);
+                    runtimeState.transitions.Add(newTransition.nameHash, newTransition);
                 }
             }
 

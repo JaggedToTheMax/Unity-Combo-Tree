@@ -23,16 +23,6 @@ namespace PlayableAnimation
         /// Callback that is triggered once the transitions completed.
         /// </summary>
         public Action OnTransitionExit;
-        /// <summary>
-        /// The default transitionparameters used when transitioning to default.
-        /// </summary>
-        public TransitionParameters defaultTransition = new TransitionParameters()
-        {
-            transitionOffset = 0,
-            transitionTime = 0.2f,
-            hasExitTime = true,
-            exitTime = 0.8f
-        };
 
         /// <summary>
         /// The playablegraph used.
@@ -81,14 +71,11 @@ namespace PlayableAnimation
         /// </summary>
         /// <param name="animationClip">The animation clip to transition to.</param>
         /// <param name="returnToDefault">Wether or not to transition to default after the transition.</param>
-        public void Transition(AnimationClip animationClip, TransitionParameters transitionParameters, bool returnToDefault = true, bool cachePlayable = true)
+        public void Transition(AnimationClip animationClip, TransitionParameters transitionParameters, bool cachePlayable = true)
         {
             Transition(new Transition(transitionParameters)
             {
                 target = new State(animationClip)
-                {
-                    returnToDefault = returnToDefault
-                }
             }, cachePlayable);
         }
         /// <inheritdoc/>
@@ -108,13 +95,6 @@ namespace PlayableAnimation
         {
             Transition(defaultState, transitionParameters, true);
         }
-        /// <summary>
-        /// Transition back to the animator controller using the default transitionparameters.
-        /// </summary>
-        public void TransitionToDefault()
-        {
-            TransitionToDefault(defaultTransition);
-        }
 
         void EnterTransition()
         {
@@ -122,6 +102,7 @@ namespace PlayableAnimation
                 return;
 
             TransitionState = TransitionState.InActiveTransition;
+            next.OnEnter(this);
 
             OnActiveTransitionEnter?.Invoke();
         }
@@ -131,6 +112,8 @@ namespace PlayableAnimation
                 return;
 
             var state = transitionSampler.Sample();
+            current.OnUpdate(this);
+            next.OnUpdate(this);
 
             if (state is TransitionState.InActiveTransition)
                 EnterTransition();
@@ -144,12 +127,13 @@ namespace PlayableAnimation
 
             TransitionState = TransitionState.None;
 
+            var prev = current;
             SetCurrentToNext();
+            prev.OnExit(this);
 
             OnTransitionExit?.Invoke();
-            if (current.returnToDefault)
-                TransitionToDefault(defaultTransition);
         }
+
         void SetCurrentToNext()
         {
             var nextPlayable = transitionMixer.GetInput(1);

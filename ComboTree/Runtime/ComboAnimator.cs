@@ -31,18 +31,18 @@ namespace ComboTree
         {
             var hash = Animator.StringToHash(name);
 
-            if (Transition(current as ComboState, hash))
+            if (TransitionCurrent(current as ComboState, hash))
                 return true;
-            else if (Transition(next as ComboState, hash))
+            else if (TransitionNext(next as ComboState, hash))
                 return true;
-            else if (Transition(anyState as ComboState, hash))
+            else if (TransitionCurrent(anyState as ComboState, hash))
                 return true;
 
             return false;
         }
 
 
-        bool Transition(ComboState state, int hash)
+        bool TransitionCurrent(ComboState state, int hash)
         {
             if (state is null)
                 return false;
@@ -55,8 +55,34 @@ namespace ComboTree
 
                 if (transition.InInputWindow(current.animationClip is null ? 0 : (float)transitionMixer.GetInput(0).GetTime() / current.animationClip.length))
                 {
-                    if (TransitionState is TransitionState.InActiveTransition)
+                    if (TransitionState is TransitionState.InActiveTransition && !transition.canInterrupt)
+                        return false;
+
+                    Transition(transition, true);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        bool TransitionNext(ComboState state, int hash)
+        {
+            if (state is null || TransitionState != TransitionState.InActiveTransition)
+                return false;
+
+
+            if (state.transitions.TryGetValue(hash, out ComboTransition transition))
+            {
+                if (transition.target == current || transition.target == next)
+                    return false;
+
+                if (transition.InInputWindow(next.animationClip is null ? 0 : (float)transitionMixer.GetInput(1).GetTime() / next.animationClip.length))
+                {
+                    if (transition.canInterrupt)
                         FinishTransition();
+                    else
+                        return false;
 
                     Transition(transition, true);
 

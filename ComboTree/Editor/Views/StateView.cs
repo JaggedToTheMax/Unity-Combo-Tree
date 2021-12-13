@@ -12,11 +12,11 @@ namespace ComboTree.Editor
 {
     public class StateView : Node
     {
-        public serializedState State { get; protected set; }
+        public SerializedState State { get; protected set; }
         public Port Input { get; private set; }
         public Port Output { get; private set; }
 
-        public StateView(serializedState state)
+        public StateView(SerializedState state)
         {
             State = state;
             style.left = State.position.x;
@@ -27,13 +27,13 @@ namespace ComboTree.Editor
 
             switch (state.name)
             {
-                case serializedState.EntryName:
+                case SerializedState.EntryName:
                     InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(SerializedTransition));
                     break;
-                case serializedState.AnyName:
+                case SerializedState.AnyName:
                     InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(SerializedTransition));
                     break;
-                case serializedState.ExitName:
+                case SerializedState.ExitName:
                     InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(SerializedTransition));
                     break;
                 default:

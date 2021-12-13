@@ -11,7 +11,7 @@ namespace ComboTree
         public float inputWindowStart;
         public float inputWindowEnd;
         public bool hasInputWindow;
-
+        public bool canInterrupt;
 
         public ComboTransition(TransitionParameters transitionParameters, string name) : base(transitionParameters)
         {
@@ -28,6 +28,7 @@ namespace ComboTree
         }
         public bool InInputWindow(float time)
         {
+            Debug.Log(time);
             return !hasInputWindow || time >= inputWindowStart && time <= inputWindowEnd;
         }
     }

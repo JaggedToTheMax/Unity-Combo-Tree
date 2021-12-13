@@ -68,22 +68,39 @@ namespace ComboTree.Editor
         }
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            if(!selection.Exists(selected => selected is StateView stateView && stateView.State.IsDefault) && selection.Count > 0)
+            if(selection.Exists(selected => selected is Edge || selected is StateView stateView && !(stateView.State.IsEntry || stateView.State.IsAny)) && selection.Count > 0)
             {
                 evt.menu.AppendAction("Delete", action => DeleteSelection());
                 evt.menu.AppendSeparator();
             }
 
+            if(selection.Count > 0 && selection.First() is TransitionView transitionView)
+            {
+                evt.menu.AppendAction("Set Default", action =>
+                {
+                    transitionView.transition.Name = "Default";
+                    EditorUtility.SetDirty(transitionView.transition.Owner);
+                });
+                evt.menu.AppendSeparator();
+            }
             evt.menu.AppendAction("New State", action => AddNewState("New AnimationState", action.eventInfo.mousePosition));
-            evt.menu.AppendAction("New Exit", action => AddNewState(serializedState.ExitName, action.eventInfo.mousePosition));
+            evt.menu.AppendAction("New Exit", action => AddNewState(SerializedState.ExitName, action.eventInfo.mousePosition));
         }
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
             var result = new List<Port>();
             ports.ForEach(port =>
             {
-                if (port.direction != startPort.direction && port.node != startPort.node && !startPort.connections.Any(edge => edge.input == port))
-                    result.Add(port);
+                if (port.direction != startPort.direction
+                && port.node != startPort.node
+                && !startPort.connections.Any(edge => edge.input == port))
+                    if (startPort.node is StateView start && port.node is StateView node)
+                    {
+                        if(startPort.direction == Direction.Input ? node.State.CanTransitionTo(start.State) : start.State.CanTransitionTo(node.State))
+                            result.Add(port);
+                    }
+                    else
+                        result.Add(port);
             });
             return result;
         }
@@ -93,7 +110,7 @@ namespace ComboTree.Editor
             var state = comboTree.AddState(name);
             OnAddState(state).SetPosition(new Rect(position, Vector2.zero));
         }
-        StateView OnAddState(serializedState state)
+        StateView OnAddState(SerializedState state)
         {
             var stateView = new StateView(state);
             AddElement(stateView);
@@ -102,7 +119,7 @@ namespace ComboTree.Editor
         }
         void OnRemoveState(StateView stateView)
         {
-            if(stateView.State is serializedState scriptableState)
+            if(stateView.State is SerializedState scriptableState)
                 comboTree.RemoveState(scriptableState);
         }
         void OnAddEdge(Edge edge)
@@ -118,7 +135,7 @@ namespace ComboTree.Editor
         }
         void OnRemoveEdge(Edge edge)
         {
-            if (edge is TransitionView edgeView && edgeView.transition is SerializedTransition transition && transition.Owner is serializedState owner)
+            if (edge is TransitionView edgeView && edgeView.transition is SerializedTransition transition && transition.Owner is SerializedState owner)
             {
                 owner.transitions.Remove(edgeView.transition);
                 EditorUtility.SetDirty(owner);
@@ -132,13 +149,24 @@ namespace ComboTree.Editor
                     OnAddEdge(edge);
                 }
             if(change.elementsToRemove is List<GraphElement> elements)
-                foreach (var element in elements)
+                for (int i = 0; i < elements.Count; i++)
                 {
+                    var element = elements[i];
+
                     if (element is Edge edge)
                         OnRemoveEdge(edge);
-
-                    if (element is StateView stateView)
-                        OnRemoveState(stateView);
+                    if(element is StateView stateView)
+                    {
+                        if(stateView.State.IsEntry || stateView.State.IsAny)
+                        {
+                            elements.RemoveAt(i);
+                            i--;
+                        }
+                        else
+                        {
+                            OnRemoveState(stateView);
+                        }
+                    }
                 }
 
             return change;

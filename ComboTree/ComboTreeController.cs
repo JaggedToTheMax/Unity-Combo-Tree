@@ -9,19 +9,19 @@ namespace ComboTree
     [CreateAssetMenu()]
     public class ComboTreeController : ScriptableObject
     {
-        public List<serializedState> States
+        public List<SerializedState> States
         {
             get
             {
                 if(scriptableStates is null)
                 {
-                    scriptableStates = new List<serializedState>();
+                    scriptableStates = new List<SerializedState>();
 
-                    var entry = AddState(serializedState.EntryName);
+                    var entry = AddState(SerializedState.EntryName);
                     entry.position = new Vector2(75, 200);
-                    var any = AddState(serializedState.AnyName);
+                    var any = AddState(SerializedState.AnyName);
                     any.position = new Vector2(75, 25);
-                    var exit = AddState(serializedState.ExitName);
+                    var exit = AddState(SerializedState.ExitName);
                     exit.position = new Vector2(500, 200);
                 }
 
@@ -31,25 +31,25 @@ namespace ComboTree
 
         [SerializeField] 
         [HideInInspector]
-        List<serializedState> scriptableStates;
+        List<SerializedState> scriptableStates;
 
-        public serializedState AddState(string name)
+        public SerializedState AddState(string name)
         {
-            serializedState state;
+            SerializedState state;
 
             switch (name)
             {
-                case serializedState.EntryName:
-                    state = serializedState.Entry();
+                case SerializedState.EntryName:
+                    state = SerializedState.Entry();
                     break;
-                case serializedState.AnyName:
-                    state = serializedState.Any();
+                case SerializedState.AnyName:
+                    state = SerializedState.Any();
                     break;
-                case serializedState.ExitName:
-                    state = serializedState.Exit();
+                case SerializedState.ExitName:
+                    state = SerializedState.Exit();
                     break;
                 default:
-                    state = serializedState.State(name);
+                    state = SerializedState.State(name);
                     break;
             }
             scriptableStates.Add(state);
@@ -60,7 +60,7 @@ namespace ComboTree
 
             return state;
         }
-        public void RemoveState(serializedState state)
+        public void RemoveState(SerializedState state)
         {
             if (state is null)
                 return;

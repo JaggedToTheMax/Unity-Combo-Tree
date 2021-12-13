@@ -7,6 +7,5 @@
     </ui:VisualElement>
     <ui:VisualElement name="InspectorContainer" style="padding-left: 15px; padding-right: 2px; padding-top: 0; padding-bottom: 0; flex-grow: 1;">
         <uie:PropertyField name="AnimationClipField" binding-path="animationClip" style="min-height: 20px;" />
-        <uie:PropertyField name="ReturnToDefaultField" binding-path="returnToDefault" style="min-height: 20px;" />
     </ui:VisualElement>
 </ui:UXML>

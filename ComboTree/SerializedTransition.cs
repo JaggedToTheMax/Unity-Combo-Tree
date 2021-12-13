@@ -8,8 +8,8 @@ namespace ComboTree
     [Serializable]
     public class SerializedTransition
     {
-        public serializedState Owner => owner;
-        public serializedState Target => target;
+        public SerializedState Owner => owner;
+        public SerializedState Target => target;
         public string Name
         {
             get
@@ -26,16 +26,24 @@ namespace ComboTree
         public float inputWindowStart;
         public float inputWindowEnd;
         public bool hasInputWindow = false;
+        public bool canInterrupt = false;
 
-        [SerializeField] [HideInInspector] serializedState owner;
-        [SerializeField] [HideInInspector] serializedState target;
+        [SerializeField] [HideInInspector] SerializedState owner;
+        [SerializeField] [HideInInspector] SerializedState target;
         [SerializeField] string name;
 
-        public SerializedTransition(serializedState from, serializedState to)
+        public SerializedTransition(SerializedState from, SerializedState to)
         {
             owner = from;
             target = to;
             from.transitions.Add(this);
+
+            transitionParameters = new TransitionParameters()
+            {
+                transitionTime = 0.2f,
+                exitTime = 0.8f,
+                hasExitTime = true
+            };
 
             Name = from.name + " -> " + to.name;
         }

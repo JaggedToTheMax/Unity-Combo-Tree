@@ -10,12 +10,12 @@ using PlayableAnimation;
 
 namespace ComboTree.Editor
 {
-    [CustomEditor(typeof(serializedState))]
+    [CustomEditor(typeof(SerializedState))]
     public partial class StateEditor : UnityEditor.Editor
     {
         SerializedObject sO;
 
-        serializedState t => target as serializedState;
+        SerializedState t => target as SerializedState;
         string path
         {
             get

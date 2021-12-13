@@ -12,5 +12,6 @@
         <uie:FloatField label="Exit Time" value="42.2" name="ExitTime" binding-path="transitionParameters.exitTime" />
         <uie:FloatField label="Transition Time" value="42.2" name="TransitionTime" binding-path="transitionParameters.transitionTime" />
         <uie:FloatField label="Transition Offset" value="42.2" name="TransitionOffset" binding-path="transitionParameters.transitionOffset" />
+        <ui:Toggle label="Can Interrupt" name="CanInterrupt" binding-path="canInterrupt" tooltip="Wether or not this transition can interrupt an active transition." />
     </ui:VisualElement>
 </ui:UXML>

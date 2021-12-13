@@ -5,8 +5,9 @@ using System;
 
 namespace ComboTree
 {
+
     [Serializable]
-    public class serializedState : ScriptableObject
+    public class SerializedState : ScriptableObject
     { 
         public const string EntryName = "Entry";
         public const string AnyName = "Any";
@@ -15,7 +16,6 @@ namespace ComboTree
         [NonReorderable]
         public List<SerializedTransition> transitions = new List<SerializedTransition>();
         public AnimationClip animationClip;
-        public bool returnToDefault = true;
         public Vector2 position;
         public bool IsDefault
         {
@@ -46,40 +46,40 @@ namespace ComboTree
             }
         }
 
-        public static serializedState State(string name, Vector2 position)
+        public static SerializedState State(string name, Vector2 position)
         {
-            var state = CreateInstance<serializedState>();
+            var state = CreateInstance<SerializedState>();
             state.name = name;
             state.position = position;
             return state;
         }
-        public static serializedState State(string name)
+        public static SerializedState State(string name)
         {
             return State(name, Vector2.zero);
         }
-        public static serializedState Entry()
+        public static SerializedState Entry()
         {
             return State(EntryName);
         }
-        public static serializedState Entry(Vector2 position)
+        public static SerializedState Entry(Vector2 position)
         {
             return State(EntryName, position);
         }
-        public static serializedState Any()
+        public static SerializedState Any()
         {
             return State(AnyName);
         }
-        public static serializedState Any(Vector2 position)
+        public static SerializedState Any(Vector2 position)
         {
             return State(AnyName, position);
         }
-        public static serializedState Exit()
+        public static SerializedState Exit()
         {
             var state = State(ExitName);
             state.transitions = null;
             return state;
         }
-        public static serializedState Exit(Vector2 position)
+        public static SerializedState Exit(Vector2 position)
         {
             var state = State(ExitName, position);
             state.transitions = null;
@@ -87,9 +87,9 @@ namespace ComboTree
         }
 
 
-        public virtual bool CanTransitionTo(serializedState target)
+        public virtual bool CanTransitionTo(SerializedState target)
         {
-            return !(IsDefault && target.IsDefault);
+            return !((IsEntry && target.IsExit) || IsExit);
         }
     }
 }

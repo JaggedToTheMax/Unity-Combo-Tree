@@ -11,8 +11,7 @@ namespace ComboTree.Editor
     {
         public SerializedTransition transition;
 
-
-
+        
         public override void OnSelected()
         {
             if (transition is null)

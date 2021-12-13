@@ -55,6 +55,9 @@ namespace ComboTree.Editor
                 sO.ApplyModifiedProperties();
             });
 
+            var canInterrupt = root.Q<Toggle>("CanInterrupt");
+            canInterrupt.bindingPath = propertyPath + canInterrupt.bindingPath;
+
             var hasIntpuWindow = root.Q<Toggle>("HasInputWindow");
             hasIntpuWindow.bindingPath = propertyPath + hasIntpuWindow.bindingPath;
 

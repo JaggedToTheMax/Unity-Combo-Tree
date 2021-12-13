@@ -1,6 +1,7 @@
 using PlayableAnimation;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace ComboTree
 {
@@ -18,6 +19,19 @@ namespace ComboTree
         {
             this.animationClip = animationClip;
             nameHash = Animator.StringToHash(animationClip is null ? "" : animationClip.name);
+        }
+
+        public override void OnEnter(PlayableAnimator animator)
+        {
+            void onTransitionComplete()
+            {
+                animator.OnTransitionExit -= onTransitionComplete;
+
+                if (transitions.TryGetValue(Animator.StringToHash("Default"), out var transition))
+                    animator.Transition(transition);
+            }
+
+            animator.OnTransitionExit += onTransitionComplete;
         }
 
         public bool IsName(string name)
